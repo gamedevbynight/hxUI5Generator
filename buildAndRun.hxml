@@ -1,0 +1,8 @@
+-cp src
+-main Main
+-lib json2object
+-lib haxe-files
+-neko  creator.n
+-cmd neko creator.n https://sapui5.hana.ondemand.com/test-resources/sap/ C:\\hxUI5\\src\\
+
+
