@@ -1,6 +1,6 @@
 # Haxe extern generator for openUI5
 
-[https://openui5.org/ OpenUI5] is a javascript application framework maintained by SAP SE available under apache 2 license.
+[OpenUI5](https://openui5.org/ OpenUI5) is a javascript application framework maintained by SAP SE available under apache 2 license.
 
 How to generate the externs:
 Use the created Neko file creator.n with
