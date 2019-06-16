@@ -70,7 +70,6 @@ class ArgsBuilder implements IBuilder {
 		return aggregations;
 	}
 
-	// TODO werden keine Arrays zum Beispiel columns bei sap.m.Table
 	function addAssociations(symbol:Symbol):String {
 		var associations:String = '';
 		if (symbol.ui5metadata != null && symbol.ui5metadata.associations != null) {

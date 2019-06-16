@@ -123,7 +123,7 @@ class Tools {
 				t = '()->Void';
 			case 'Promise':
 				t = 'js.Promise<>';
-			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null': // TODO null should be in the Function Param ?varName=null
+			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null': 
 				t = 'Dynamic';
 			case 'array' | 'Array':
 				t = 'Array<Dynamic>';
@@ -133,7 +133,7 @@ class Tools {
 				t = 'js.html.HtmlElement';
 			case 'Element':
 				t = 'js.html.Element';
-			case 'jQuery': // TODO should be change to Haxe js.JQuery
+			case 'jQuery':
 				t = 'Dynamic';
 			case 'sap.ui.core.Configuration.FormatSettings':
 				t = 'sap.ui.core.configuration.FormatSettings';

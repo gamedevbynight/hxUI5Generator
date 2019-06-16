@@ -7,8 +7,6 @@ import builder.*;
 
 using StringTools;
 
-// TODO sap.base is buggy with module:sap/ etc.
-// TODO module:Parameter should be fixed
 class Main {
 	public static var API:String = '/designtime/api.json';
 

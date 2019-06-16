@@ -83,7 +83,7 @@ class ClassBuilder implements IBuilder {
 		return constructor;
 	}
 
-	// TODO Constructor kann auch mehr als 2 Parameter haben
+	// TODO 'ArgsConstuctor can have more than 2 parameter
 	function buildConstructorWithArgsTypedef(symbol:Symbol):String {
 		var argsName:String = symbol.basename + 'Args';
 		var constructor:String = '';

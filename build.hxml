@@ -2,5 +2,5 @@
 -main Main
 -lib json2object
 -lib haxe-files
--hl  creator.hl
+-neko  creator.n
 
