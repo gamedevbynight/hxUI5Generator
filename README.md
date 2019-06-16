@@ -4,14 +4,14 @@
 
 How to generate the externs:
 Use the created Neko file creator.n with
-`neko creator.n {UI5 URL} {Path} {?Number} {?Lib}`
+```neko creator.n {UI5 URL} {Path} {?Number} {?Lib}```
 
 For example:
-`neko creator.n https://openui5.hana.ondemand.com/test-resources/sap/ C:\\hxUI5\\src\\ 101 m `
+```neko creator.n https://openui5.hana.ondemand.com/test-resources/sap/ C:\\hxUI5\\src\\ 101 m ```
 for sap.m.LightBoxItem 
 
 or 
-`neko creator.n https://openui5.hana.ondemand.com/test-resources/sap/ C:\\hxUI5\\src\\`
+```neko creator.n https://openui5.hana.ondemand.com/test-resources/sap/ C:\\hxUI5\\src\\```
 
 for everything.
 
