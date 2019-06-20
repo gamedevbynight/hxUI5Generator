@@ -11,25 +11,26 @@ class EnumBuilder implements IBuilder{
 
 		var file = Tools.fileForSymbol(symbol);
 
-		var fileContent:String = Tools.buildPackageNameForSymbol(symbol);
+		var fileContent:StringBuf = new StringBuf();
+		fileContent.add(Tools.buildPackageNameForSymbol(symbol));
 
-		fileContent += Tools.addNativeName(symbol);
+		fileContent.add(Tools.addNativeName(symbol));
 
-		fileContent += '@:enum extern abstract ' + symbol.basename + '(String)\n{\n';
+		fileContent.add('@:enum extern abstract ' + symbol.basename + '(String)\n{\n');
 
 		if (symbol.properties != null) {
 			for (property in symbol.properties) {
-				fileContent += '    /**\n';
-				fileContent += '    * ' + property.description + '\n';
-				fileContent += '    */\n';
-				fileContent += '    var ' + property.name + '= "' + property.name + '";\n';
+				fileContent.add( '    /**\n');
+				fileContent.add('    * ' + property.description + '\n');
+				fileContent.add('    */\n');
+				fileContent.add('    var ' + property.name + '= "' + property.name + '";\n');
 			}
 		}
 
-		fileContent += '}\n';
+		fileContent.add('}\n');
 
-		file.writeString(fileContent);
+		file.writeString(fileContent.toString());
 
-		return fileContent;
+		return fileContent.toString();
 	}
 }

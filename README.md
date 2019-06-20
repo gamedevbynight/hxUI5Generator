@@ -23,7 +23,6 @@ The URLs to the JSONS are:
 * https://openui5.hana.ondemand.com/1.66.0/test-resources/sap/uxap/designtime/api.json --> uxap-Lib
 
 ToDos: 
-* Change String to StringBuffer
 * FunctionParameter "null" should be integrated as ?paramName = null for overload functions
-* 'ArgsConstuctor can have more than 2 parameter
+* 'ArgsConstructor can have more than 2 parameter
 * there are some Problem with sap.m.Title

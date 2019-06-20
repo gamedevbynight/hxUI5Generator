@@ -25,9 +25,9 @@ class MethodBuilder implements IBuilder {
 						isOnlyOverload = true;
 					}
 					if (method.parameters != null) {
-						methodContent += buildFunctionWithOverloads(method, isOnlyOverload);
+						methodContent = buildFunctionWithOverloads(method, isOnlyOverload);
 					} else {
-						methodContent += buildFunctionWithoutParameters(method, isOnlyOverload);
+						methodContent = buildFunctionWithoutParameters(method, isOnlyOverload);
 					}
 				}
 			}
@@ -67,14 +67,14 @@ class MethodBuilder implements IBuilder {
 		}
 
 		var parameterContents = new Array<String>();
-		overloadContent += addOverloadforParameterCollection(parameterCollection, 0, parameterContents, method, true, isOnlyOverload);
+		overloadContent = addOverloadforParameterCollection(parameterCollection, 0, parameterContents, method, true, isOnlyOverload);
 
 		return overloadContent;
 	}
 
 	function addOverloadforParameterCollection(parameterCollection:Array<Array<MethodParameter>>, collectionNumber:Int, parameterContents:Array<String>,
 			method:Method, isLast:Bool, isOnlyOverload:Bool):String {
-		var content:String = '';
+		var content = new StringBuf();
 		var last:Bool = false;
 		var collection = parameterCollection[collectionNumber];
 		if (collection == null)
@@ -91,54 +91,55 @@ class MethodBuilder implements IBuilder {
 				pc = pc.concat(parameterContents);
 				pc.push(textForParameter(parameter));
 				if (last && isLast) {
-					content += buildMethodDescription(method);
-					content += buildMethodBeginning(method);
+					content.add(buildMethodDescription(method));
+					content.add(buildMethodBeginning(method));
 					for (i in 0...pc.length) {
-						content += pc[i];
+						content.add(pc[i]);
 						if (i != pc.length - 1 && pc.length > 1) {
-							content += ', ';
+							content.add(', ');
 						}
 					}
-					content += '):' + contentForReturnValue(method.returnValue) + ';\n';
+					content.add('):' + contentForReturnValue(method.returnValue) + ';\n');
 				} else {
-					content += '	@:overload( function(';
+					content.add('	@:overload( function(');
 					for (i in 0...pc.length) {
-						content += pc[i];
+						content.add(pc[i]);
 						if (i != pc.length - 1 && pc.length > 1) {
-							content += ', ';
+							content.add(', ');
 						}
 					}
-					content += '):' + contentForReturnValue(method.returnValue) + '{ })\n';
+					content.add('):' + contentForReturnValue(method.returnValue) + '{ })\n');
 				}
 			} else {
 				var pc = new Array<String>();
 				pc = pc.concat(parameterContents);
 				pc.push(textForParameter(parameter));
-				content += addOverloadforParameterCollection(parameterCollection, collectionNumber + 1, pc, method, last, isOnlyOverload);
+				content.add(addOverloadforParameterCollection(parameterCollection, collectionNumber + 1, pc, method, last, isOnlyOverload));
 			}
 		}
 
-		return content;
+		return content.toString();
 	}
 
 	function buildMethodDescription(method:Method):String {
-		var desc:String = '\n';
-		desc += '	/**\n';
-		desc += '	* ' + method.description + '\n';
+		var desc = new StringBuf();
+		desc.add('\n');
+		desc.add('	/**\n');
+		desc.add('	* ' + method.description + '\n');
 		if (method.parameters != null) {
 			for (parameter in method.parameters) {
-				desc += '	* @param	' + parameter.name + ' ' + parameter.description + '\n';
+				desc.add('	* @param	' + parameter.name + ' ' + parameter.description + '\n');
 			}
 		}
 
 		if (method.returnValue != null) {
-			desc += '	* @return	' + method.returnValue.description + '\n';
+			desc.add('	* @return	' + method.returnValue.description + '\n');
 		} else {
-			desc += '	* @return	Void\n';
+			desc.add('	* @return	Void\n');
 		}
 
-		desc += '	*/\n';
-		return desc;
+		desc.add('	*/\n');
+		return desc.toString();
 	}
 
 	function checkDescriptionisType(description:String):Bool {
@@ -165,7 +166,7 @@ class MethodBuilder implements IBuilder {
 
 	function buildOverloadMethod(method:Method):String {
 		var methodContent:String = '';
-		methodContent += '@:overload( function():' + contentForReturnValue(method.returnValue) + '{ })\n';
+		methodContent = '@:overload( function():' + contentForReturnValue(method.returnValue) + '{ })\n';
 		return methodContent;
 	}
 
@@ -187,13 +188,13 @@ class MethodBuilder implements IBuilder {
 	}
 
 	function textForParameter(parameter:MethodParameter):String {
-		var parameterContent:String = '';
+		var parameterContent= new StringBuf();
 		if (parameter.optional) {
-			parameterContent += '?';
+			parameterContent.add('?');
 		}
-		parameterContent += parameter.name + ':' + Tools.determineType(parameter.type);
+		parameterContent.add(parameter.name + ':' + Tools.determineType(parameter.type));
 
-		return parameterContent;
+		return parameterContent.toString();
 	}
 
 	function buildMethodBeginning(method:Method):String {
@@ -203,7 +204,7 @@ class MethodBuilder implements IBuilder {
 		}
 
 		var beginning:String = '';
-		beginning += '	public$withStatic function ' + method.name + '( ';
+		beginning = '	public$withStatic function ' + method.name + '( ';
 
 		return beginning;
 	}
