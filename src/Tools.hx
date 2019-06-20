@@ -82,12 +82,13 @@ class Tools {
 	}
 
 	public static function buildComment(gaps:String, description:String):String {
-		var comment:String = '\n';
-		comment += '$gaps/**\n';
-		comment += '$gaps* ' + description + '\n';
-		comment += '$gaps*/\n';
+		var comment= new StringBuf();
+		comment.add('\n');
+		comment.add('$gaps/**\n');
+		comment.add('$gaps* ' + description + '\n');
+		comment.add('$gaps*/\n');
 
-		return comment;
+		return comment.toString();
 	}
 
 	public static function determineType(type:String):String {

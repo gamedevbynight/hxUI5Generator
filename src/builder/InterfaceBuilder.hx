@@ -13,7 +13,7 @@ class InterfaceBuilder implements IBuilder{
 
 		var fileContent:String = Tools.buildPackageNameForSymbol(symbol);
 
-		fileContent += 'extern interface ' + symbol.basename + '{ \n\n}';
+		fileContent = 'extern interface ' + symbol.basename + '{ \n\n}';
 		file.writeString(fileContent);
 
 		return fileContent;

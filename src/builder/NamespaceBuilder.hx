@@ -26,20 +26,21 @@ class NamespaceBuilder implements IBuilder {
 		Tools.setPathForSymbol(symbol);
 
 		var file = Tools.fileForSymbol(symbol);
-		var fileContent:String = Tools.buildPackageNameForSymbol(symbol);
+		var fileContent= new StringBuf();
+		fileContent.add(Tools.buildPackageNameForSymbol(symbol));
 
-		fileContent += Tools.buildComment('', symbol.description);
+		fileContent.add(Tools.buildComment('', symbol.description));
 
 		var type = Tools.determineType(symbol.ui5metadata.basetype);
 
-		fileContent += 'abstract ' + symbol.basename + '($type) from $type to $type {\n';
-		fileContent += '    inline function new(i:$type) {\n';
-		fileContent += '        this = i;\n';
-		fileContent += '    }\n';
-		fileContent += '}\n';
+		fileContent.add('abstract ' + symbol.basename + '($type) from $type to $type {\n');
+		fileContent.add('    inline function new(i:$type) {\n');
+		fileContent.add('        this = i;\n');
+		fileContent.add('    }\n');
+		fileContent.add('}\n');
 
-		file.writeString(fileContent);
-		return fileContent;
+		file.writeString(fileContent.toString());
+		return fileContent.toString();
 	}
 
 	function buildFileForMethodNamespace(symbol:Symbol):String {
@@ -62,19 +63,20 @@ class NamespaceBuilder implements IBuilder {
 		}
 
 		var file = Tools.fileForSymbol(symbol);
-		var fileContent:String = Tools.buildPackageNameForSymbol(symbol);
+		var fileContent= new StringBuf();
+		fileContent.add(Tools.buildPackageNameForSymbol(symbol));
 
 		if (nativeName) {
-			fileContent += '@:native("' + symbol.originalName + '")\n';
+			fileContent.add('@:native("' + symbol.originalName + '")\n');
 		}
 
-		fileContent += 'extern class ' + symbol.basename;
-		fileContent += '\n{\n';
-		fileContent += methodBuilder.build(symbol);
-		fileContent += '}\n\n';
+		fileContent.add('extern class ' + symbol.basename);
+		fileContent.add('\n{\n');
+		fileContent.add(methodBuilder.build(symbol));
+		fileContent.add('}\n\n');
 
-		file.writeString(fileContent);
+		file.writeString(fileContent.toString());
 
-		return fileContent;
+		return fileContent.toString();
 	}
 }

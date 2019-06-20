@@ -1,8 +1,5 @@
 package builder;
 
-import apimodel.ReturnValue;
-import apimodel.Method;
-import apimodel.MethodParameter;
 import apimodel.Symbol;
 
 /**
@@ -21,31 +18,32 @@ class ClassBuilder implements IBuilder {
 		Tools.setPathForSymbol(symbol);
 
 		var file = Tools.fileForSymbol(symbol);
-		var fileContent:String = Tools.buildPackageNameForSymbol(symbol);
+		var fileContent:StringBuf = new StringBuf();
+		fileContent.add(Tools.buildPackageNameForSymbol(symbol));
 
-		fileContent += Tools.addNativeName(symbol);
-		fileContent += Tools.buildDescription(symbol);
-		fileContent += 'extern class ' + symbol.basename;
-		fileContent += addExtends(symbol);
-		fileContent += addImplements(symbol);
-		fileContent += '\n{\n';
-		fileContent += generateConstructor(symbol);
-		fileContent += methodBuilder.build(symbol);
-		fileContent += '}\n\n';
+		fileContent.add(Tools.addNativeName(symbol));
+		fileContent.add(Tools.buildDescription(symbol));
+		fileContent.add('extern class ' + symbol.basename);
+		fileContent.add(addExtends(symbol));
+		fileContent.add(addImplements(symbol));
+		fileContent.add('\n{\n');
+		fileContent.add(generateConstructor(symbol));
+		fileContent.add(methodBuilder.build(symbol));
+		fileContent.add('}\n\n');
 
 		if (checkArgsConstructor(symbol) || symbol.basename == 'ManagedObject') {
-			fileContent += argsBuilder.build(symbol);
+			fileContent.add(argsBuilder.build(symbol));
 		}
 
-		file.writeString(fileContent);
+		file.writeString(fileContent.toString());
 
-		return fileContent;
+		return fileContent.toString();
 	}
 
 	function addExtends(symbol:Symbol):String {
 		var extending:String = '';
 		if (symbol.extending != null && symbol.extending != 'Object') {
-			extending += ' extends ' + Tools.determineType(symbol.extending);
+			extending = ' extends ' + Tools.determineType(symbol.extending);
 		}
 
 		return extending;
@@ -86,18 +84,20 @@ class ClassBuilder implements IBuilder {
 	// TODO 'ArgsConstuctor can have more than 2 parameter
 	function buildConstructorWithArgsTypedef(symbol:Symbol):String {
 		var argsName:String = symbol.basename + 'Args';
-		var constructor:String = '';
-		constructor += '	@:overload(function(?sId:String, ?mSettings:$argsName):Void {})\n';
-		constructor += '	public function new(?mSettings:$argsName):Void;\n';
-		return constructor;
+		var constructor = new StringBuf();
+		constructor.add('');
+		constructor.add('	@:overload(function(?sId:String, ?mSettings:$argsName):Void {})\n');
+		constructor.add('	public function new(?mSettings:$argsName):Void;\n');
+		return constructor.toString();
 	}
 
 	function buildMethodStyleConstructor(symbol:Symbol):String {
-		var constructor:String = '';
+		var constructor = new StringBuf();
+		constructor.add('');
 		for (p in symbol.constructor.parameters) {
 			p.optional = true;
 		}
-		constructor += methodBuilder.buildFunctionWithOverloads({
+		constructor.add(methodBuilder.buildFunctionWithOverloads({
 			name: 'new',
 			returnValue: {type: 'Void', description: 'Object'},
 			visibility: symbol.constructor.visibility,
@@ -105,9 +105,9 @@ class ClassBuilder implements IBuilder {
 			isStatic: false,
 			description: '',
 			deprecated: null
-		});
+		}));
 
-		return constructor;
+		return constructor.toString();
 	}
 
 	function buildEmptyConstructor():String {
