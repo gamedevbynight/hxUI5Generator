@@ -33,7 +33,7 @@ class MethodBuilder implements IBuilder {
 			}
 		}
 		var className:String = symbol.basename;
-		methodContent = methodContent.replace('js.Promise<>', 'js.Promise<$className>');
+		methodContent = methodContent.replace('js.lib.Promise<>', 'js.lib.Promise<$className>');
 		return methodContent;
 	}
 

@@ -105,7 +105,7 @@ class Tools {
 
 		if (t.indexOf('Promise.') != -1 || t.indexOf('promise.')!= -1) {
 			var promiseType = t.substring(t.indexOf('<') + 1, t.indexOf('>'));
-			t = 'js.Promise<' + determineType(promiseType) + '>';
+			t = 'js.lib.Promise<' + determineType(promiseType) + '>';
 		}
 
 		switch (t) {
@@ -114,7 +114,7 @@ class Tools {
 			case 'string' | 'String' | 'number':
 				t = 'String';
 			case 'int' | 'Int':
-				t = 'Int';
+				t = 'haxe.extern.EitherType<String, Int>';
 			case 'float' | 'Float':
 				t = 'Float';
 			case 'object' | 'Object':
@@ -122,7 +122,7 @@ class Tools {
 			case 'function' | 'Function' | 'function()':
 				t = '()->Void';
 			case 'Promise':
-				t = 'js.Promise<>';
+				t = 'js.lib.Promise<>';
 			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null': 
 				t = 'Dynamic';
 			case 'array' | 'Array':
