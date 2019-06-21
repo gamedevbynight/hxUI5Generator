@@ -25,9 +25,9 @@ class MethodBuilder implements IBuilder {
 						isOnlyOverload = true;
 					}
 					if (method.parameters != null) {
-						methodContent = buildFunctionWithOverloads(method, isOnlyOverload);
+						methodContent += buildFunctionWithOverloads(method, isOnlyOverload);
 					} else {
-						methodContent = buildFunctionWithoutParameters(method, isOnlyOverload);
+						methodContent += buildFunctionWithoutParameters(method, isOnlyOverload);
 					}
 				}
 			}
