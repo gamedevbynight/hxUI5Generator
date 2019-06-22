@@ -111,15 +111,15 @@ class Tools {
 
 		switch (t) {
 			case 'boolean' | 'Boolean':
-				t = 'Bool';
+				t = 'haxe.extern.EitherType<String,Bool>';
 			case 'string' | 'String' | 'number':
 				t = 'String';
 			case 'int' | 'Int':
 				t = 'haxe.extern.EitherType<String, Int>';
 			case 'float' | 'Float':
-				t = 'Float';
+				t = 'haxe.extern.EitherType<String,Float>';
 			case 'object' | 'Object':
-				t = 'Dynamic';
+				t = 'haxe.extern.EitherType<String,Dynamic>';
 			case 'function' | 'Function' | 'function()':
 				t = '()->Void';
 			case 'Promise':
@@ -127,19 +127,19 @@ class Tools {
 			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null': 
 				t = 'Dynamic';
 			case 'array' | 'Array':
-				t = 'Array<Dynamic>';
+				t = 'haxe.extern.EitherType<String,Array<Dynamic>>';
 			case 'sap.m.ValueState':
-				t = 'sap.ui.core.ValueState';
+				t = 'haxe.extern.EitherType<String,sap.ui.core.ValueState>';
 			case 'HTMLElement':
-				t = 'js.html.HtmlElement';
+				t = 'haxe.extern.EitherType<String,js.html.HtmlElement>';
 			case 'Element':
-				t = 'js.html.Element';
+				t = 'haxe.extern.EitherType<String,js.html.Element>';
 			case 'jQuery':
 				t = 'Dynamic';
 			case 'sap.ui.core.Configuration.FormatSettings':
-				t = 'sap.ui.core.configuration.FormatSettings';
+				t = 'haxe.extern.EitherType<String,sap.ui.core.configuration.FormatSettings>';
 			case 'sap.ui.core.Configuration.AnimationMode':
-				t = 'sap.ui.core.configuration.AnimationMode';
+				t = 'haxe.extern.EitherType<String,sap.ui.core.configuration.AnimationMode>';
 
 			default:
 				// nothing to do
