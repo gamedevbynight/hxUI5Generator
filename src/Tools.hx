@@ -34,8 +34,7 @@ class Tools {
 
 	public static function checkCorrectName(name:String):Bool {
 		var splits = name.split('.');
-		if(splits.length > 1)
-		{
+		if (splits.length > 1) {
 			return isLowerCase(splits[splits.length - 2].charAt(0));
 		}
 		return false;
@@ -82,7 +81,7 @@ class Tools {
 	}
 
 	public static function buildComment(gaps:String, description:String):String {
-		var comment= new StringBuf();
+		var comment = new StringBuf();
 		comment.add('\n');
 		comment.add('$gaps/**\n');
 		comment.add('$gaps* ' + description + '\n');
@@ -91,7 +90,7 @@ class Tools {
 		return comment.toString();
 	}
 
-	public static function determineType(type:String):String {
+	public static function determineType(type:String, ?isArgsFunction = false):String {
 		var t:String = type;
 
 		var isArray:Bool = false;
@@ -99,50 +98,58 @@ class Tools {
 			isArray = true;
 			t = t.replace('[]', '');
 		}
-		
+
 		if (t.indexOf('module:') != -1 || checkCorrectName(t)) {
 			t = findHaxeName(t);
 		}
 
-		if (t.indexOf('Promise.') != -1 || t.indexOf('promise.')!= -1) {
+		if (t.indexOf('Promise.') != -1 || t.indexOf('promise.') != -1) {
 			var promiseType = t.substring(t.indexOf('<') + 1, t.indexOf('>'));
 			t = 'js.lib.Promise<' + determineType(promiseType) + '>';
 		}
 
+		var start = '';
+		var end = '';
+		if (isArgsFunction) {
+			start = 'haxe.extern.EitherType<String,';
+			end = '>';
+		}
+
 		switch (t) {
 			case 'boolean' | 'Boolean':
-				t = 'haxe.extern.EitherType<String,Bool>';
+				t = start + 'Bool' + end;
 			case 'string' | 'String' | 'number':
 				t = 'String';
 			case 'int' | 'Int':
-				t = 'haxe.extern.EitherType<String, Int>';
+				t = start + 'Int' + end;
 			case 'float' | 'Float':
-				t = 'haxe.extern.EitherType<String,Float>';
+				t = start + 'Float' + end;
 			case 'object' | 'Object':
-				t = 'haxe.extern.EitherType<String,Dynamic>';
+				t = start + 'Dynamic' + end;
 			case 'function' | 'Function' | 'function()':
 				t = '()->Void';
 			case 'Promise':
 				t = 'js.lib.Promise<>';
-			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null': 
+			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null':
 				t = 'Dynamic';
 			case 'array' | 'Array':
-				t = 'haxe.extern.EitherType<String,Array<Dynamic>>';
+				t = start + 'Array<Dynamic>' + end;
 			case 'sap.m.ValueState':
-				t = 'haxe.extern.EitherType<String,sap.ui.core.ValueState>';
+				t = start + 'sap.ui.core.ValueState' + end;
 			case 'HTMLElement':
-				t = 'haxe.extern.EitherType<String,js.html.HtmlElement>';
+				t = start + 'js.html.HtmlElement' + end;
 			case 'Element':
-				t = 'haxe.extern.EitherType<String,js.html.Element>';
+				t = start + 'js.html.Element' + end;
 			case 'jQuery':
 				t = 'Dynamic';
 			case 'sap.ui.core.Configuration.FormatSettings':
-				t = 'haxe.extern.EitherType<String,sap.ui.core.configuration.FormatSettings>';
+				t = start + 'sap.ui.core.configuration.FormatSettings' + end;
 			case 'sap.ui.core.Configuration.AnimationMode':
-				t = 'haxe.extern.EitherType<String,sap.ui.core.configuration.AnimationMode>';
+				t = start + 'sap.ui.core.configuration.AnimationMode' + end;
 
 			default:
-				// nothing to do
+				if (isArgsFunction)
+					t = start + t + end;
 		}
 		if (isArray) {
 			t = 'Array<$t>';
