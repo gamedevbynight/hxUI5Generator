@@ -177,7 +177,7 @@ class MethodBuilder implements IBuilder {
 			if (checkDescriptionisType(returnValue.description)) {
 				return Tools.determineType(returnValue.description);
 			} else {
-				return 'Void';
+				return 'Dynamic';
 			}
 		}
 
