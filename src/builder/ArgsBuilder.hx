@@ -45,7 +45,7 @@ class ArgsBuilder implements IBuilder {
 				for (property in symbol.ui5metadata.properties) {
 					if (property.deprecated == null) {
 						properties.add(Tools.buildComment('	', property.description));
-						properties.add('	@:optional var ' + property.name + ':' + Tools.determineType(property.type) + ';\n');
+						properties.add('	@:optional var ' + property.name + ':' + Tools.determineType(property.type, true) + ';\n');
 					}
 				}
 			}
@@ -60,9 +60,9 @@ class ArgsBuilder implements IBuilder {
 				if (aggregation.deprecated == null) {
 					aggregations.add(Tools.buildComment('    ', aggregation.description));
 					if (aggregation.cardinality != '0..n') {
-						aggregations.add('	@:optional var ' + aggregation.name + ':' + Tools.determineType(aggregation.type) + ';\n');
+						aggregations.add('	@:optional var ' + aggregation.name + ':' + Tools.determineType(aggregation.type,true) + ';\n');
 					} else {
-						aggregations.add('	@:optional var ' + aggregation.name + ':' + Tools.determineType(aggregation.type + '[]') + ';\n');
+						aggregations.add('	@:optional var ' + aggregation.name + ':' + Tools.determineType(aggregation.type + '[]',true) + ';\n');
 					}
 				}
 			}
@@ -77,9 +77,9 @@ class ArgsBuilder implements IBuilder {
 				if (assosication.deprecated == null) {
 					associations.add(Tools.buildComment('	', assosication.description));
 					if (assosication.cardinality != '0..n') {
-						associations.add('	@:optional var ' + assosication.name + ':' + Tools.determineType(assosication.type) + ';\n');
+						associations.add('	@:optional var ' + assosication.name + ':' + Tools.determineType(assosication.type,true) + ';\n');
 					} else {
-						associations.add('	@:optional var ' + assosication.name + ':' + Tools.determineType(assosication.type + '[]') + ';\n');
+						associations.add('	@:optional var ' + assosication.name + ':' + Tools.determineType(assosication.type + '[]',true) + ';\n');
 					}
 				}
 			}
@@ -95,7 +95,7 @@ class ArgsBuilder implements IBuilder {
 					events.add(Tools.buildComment('	', event.description));
 					events.add('	@:optional var ' + event.name + ':(');
 					for (param in event.parameters) {
-						events.add(param.name + ':' + Tools.determineType(param.type));
+						events.add(param.name + ':' + Tools.determineType(param.type,true));
 						if (event.parameters.indexOf(param) != event.parameters.length - 1) {
 							events.add(',');
 						}

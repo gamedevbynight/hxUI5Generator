@@ -11,11 +11,12 @@ class InterfaceBuilder implements IBuilder{
 
 		var file = Tools.fileForSymbol(symbol);
 
-		var fileContent:String = Tools.buildPackageNameForSymbol(symbol);
+		var fileContent = new StringBuf();
+		fileContent.add(Tools.buildPackageNameForSymbol(symbol));
 
-		fileContent = 'extern interface ' + symbol.basename + '{ \n\n}';
-		file.writeString(fileContent);
+		fileContent.add('extern interface ' + symbol.basename + '{ \n\n}');
+		file.writeString(fileContent.toString());
 
-		return fileContent;
+		return fileContent.toString();
 	}
 }
