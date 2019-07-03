@@ -107,11 +107,9 @@ class Main {
 		} else {
 			for (symbol in overview.symbols) {
 				if (symbol.name.indexOf('jQuery') == -1) {
-					if (symbol.visibility != 'restricted') {
 						trace("Building: " + symbol.name);
 						createFileForSymbol(symbol);
 						createMainDirs();
-					}
 				}
 			}
 		}

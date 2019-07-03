@@ -15,6 +15,7 @@ class ClassBuilder implements IBuilder {
 	}
 
 	public function build(symbol:Symbol):String {
+		if(symbol.visibility == 'restricted') return "";
 		Tools.setPathForSymbol(symbol);
 
 		var file = Tools.fileForSymbol(symbol);
@@ -49,12 +50,28 @@ class ClassBuilder implements IBuilder {
 		return extending;
 	}
 
+	// function replaceMSettingsWithArgsParam(symbol:Symbol):Bool
+	// {
+	// 	var buildArgs:Bool = false;
+	// 	for(method in symbol.methods)
+	// 	{
+	// 		for(parameter in method.parameters)
+	// 		{
+	// 			if(parameter.name == 'mSettings')
+	// 			buildArgs = true;
+	// 			parameter.type = ARGSNAME
+	// 		}
+	// 	}
+
+	// 	return buildArgs;
+	// }
+
 	function addImplements(symbol:Symbol):String {
 		var implementing:String = '';
 		if (symbol.implementing != null) {
 			for (i in symbol.implementing) {
-				if (i == 'sap.m.IHyphenation' || i == 'sap.ui.core.IDScope')
-					continue;
+				// if (i == 'sap.m.IHyphenation' || i == 'sap.ui.core.IDScope')
+				// 	continue;
 				implementing += ' implements ' + i;
 			}
 		}

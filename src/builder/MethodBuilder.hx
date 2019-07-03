@@ -18,7 +18,7 @@ class MethodBuilder implements IBuilder {
 		var methodContent = '';
 		if (symbol.methods != null) {
 			for (method in symbol.methods) {
-				if (method.visibility == 'public' && method.deprecated == null && method.name.indexOf('.') == -1) {
+				if (method.visibility == 'public' && method.deprecated == null && method.name.indexOf('.') == -1 && !method.name.contains("class")) {
 					var isOnlyOverload:Bool = false;
 					if (symbol.methods.indexOf(method) < symbol.methods.length - 1
 						&& symbol.methods[symbol.methods.indexOf(method) + 1].name == method.name) {
