@@ -21,6 +21,12 @@ class Main {
 	var sapF:String;
 	var sapCore:String;
 	var sapUxap:String;
+	var sapUiCommons:String;
+	var sapUiLayout:String;
+	var sapUiTable:String;
+	var sapUiUnified:String;
+	var sapUiIntegration:String;
+	var sapUiCodeeditor:String;
 
 	static function main() {
 		new Main();
@@ -39,6 +45,12 @@ class Main {
 		sapF = url + 'f' + API;
 		sapCore = url + 'ui/core' + API;
 		sapUxap = url + 'uxap' + API;
+		sapUiCommons = url + 'ui/commons' + API;
+		sapUiLayout = url + 'ui/layout' + API;
+		sapUiTable = url + 'ui/table' + API;
+		sapUiUnified = url + 'ui/unified' + API;
+		sapUiIntegration = url + 'ui/integration' + API;
+		sapUiCodeeditor = url + 'ui/codeeditor' + API;
 
 		var parser = new JsonParser<Overview>();
 
@@ -62,6 +74,12 @@ class Main {
 		if (Sys.args()[3] == null || Sys.args()[3] == 'core') {
 			var overviewCore = parser.fromJson(Http.requestUrl(sapCore));
 			createExterns(overviewCore);
+			createExterns(parser.fromJson(Http.requestUrl(sapUiCodeeditor)));
+			createExterns(parser.fromJson(Http.requestUrl(sapUiCommons)));
+			createExterns(parser.fromJson(Http.requestUrl(sapUiIntegration)));
+			createExterns(parser.fromJson(Http.requestUrl(sapUiLayout)));
+			createExterns(parser.fromJson(Http.requestUrl(sapUiTable)));
+			createExterns(parser.fromJson(Http.requestUrl(sapUiUnified)));
 		}
 
 		if (Sys.args()[3] == null || Sys.args()[3] == 'uxap') {
@@ -89,9 +107,11 @@ class Main {
 		} else {
 			for (symbol in overview.symbols) {
 				if (symbol.name.indexOf('jQuery') == -1) {
-					trace("Building: " + symbol.name);
-					createFileForSymbol(symbol);
-					createMainDirs();
+					if (symbol.visibility != 'restricted') {
+						trace("Building: " + symbol.name);
+						createFileForSymbol(symbol);
+						createMainDirs();
+					}
 				}
 			}
 		}
