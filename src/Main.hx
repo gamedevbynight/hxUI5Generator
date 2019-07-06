@@ -56,19 +56,25 @@ class Main {
 
 		createMainDirs();
 
+		var version:String = "";
+
+
 		if (Sys.args()[3] == null || Sys.args()[3] == 'm') {
 			var overviewM = parser.fromJson(Http.requestUrl(sapM));
 			createExterns(overviewM);
+			version = overviewM.version;
 		}
 
 		if (Sys.args()[3] == null || Sys.args()[3] == 'tnt') {
 			var overviewTnT = parser.fromJson(Http.requestUrl(sapTnt));
 			createExterns(overviewTnT);
+			version = overviewTnT.version;
 		}
 
 		if (Sys.args()[3] == null || Sys.args()[3] == 'f') {
 			var overviewF = parser.fromJson(Http.requestUrl(sapF));
 			createExterns(overviewF);
+			version = overviewF.version;
 		}
 
 		if (Sys.args()[3] == null || Sys.args()[3] == 'core') {
@@ -80,12 +86,23 @@ class Main {
 			createExterns(parser.fromJson(Http.requestUrl(sapUiLayout)));
 			createExterns(parser.fromJson(Http.requestUrl(sapUiTable)));
 			createExterns(parser.fromJson(Http.requestUrl(sapUiUnified)));
+			version = overviewCore.version;
+
 		}
 
 		if (Sys.args()[3] == null || Sys.args()[3] == 'uxap') {
 			var overviewUxap = parser.fromJson(Http.requestUrl(sapUxap));
 			createExterns(overviewUxap);
+			version = overviewUxap.version;
 		}
+		createReadme(version);
+	}
+
+	function createReadme(version:String):Void
+	{
+		createMainDirs();
+		var readmeBuilder = new ReadMeBuilder();
+		readmeBuilder.build(version);
 	}
 
 	function createMainDirs() {
