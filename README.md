@@ -16,13 +16,13 @@ or
 for everything.
 
 The URLs to the JSONS are:
-* https://openui5.hana.ondemand.com/1.66.0/test-resources/sap/m/designtime/api.json --> m-Lib
-* https://openui5.hana.ondemand.com/1.66.0/test-resources/sap/tnt/designtime/api.json --> tnt-Lib
-* https://openui5.hana.ondemand.com/1.66.0/test-resources/sap/f/designtime/api.json --> f-lib
-* https://openui5.hana.ondemand.com/1.66.0/test-resources/sap/ui/core/designtime/api.json --> ui-Lib
-* https://openui5.hana.ondemand.com/1.66.0/test-resources/sap/uxap/designtime/api.json --> uxap-Lib
+* https://openui5.hana.ondemand.com/test-resources/sap/m/designtime/api.json --> m-Lib
+* https://openui5.hana.ondemand.com/test-resources/sap/tnt/designtime/api.json --> tnt-Lib
+* https://openui5.hana.ondemand.com/test-resources/sap/f/designtime/api.json --> f-lib
+* https://openui5.hana.ondemand.com/test-resources/sap/ui/core/designtime/api.json --> ui-Lib
+* https://openui5.hana.ondemand.com/test-resources/sap/uxap/designtime/api.json --> uxap-Lib
 
 ToDos: 
-* FunctionParameter "null" should be integrated as ?paramName = null for overload functions
-* 'ArgsConstructor can have more than 2 parameter
-* there are some Problem with sap.m.Title
+* FunctionParameter "null" should be generated as ?paramName = null for overload functions
+* ArgsConstructor can have more than 2 parameter
+
