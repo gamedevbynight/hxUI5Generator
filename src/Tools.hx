@@ -93,6 +93,18 @@ class Tools {
 	public static function determineType(type:String, ?isArgsFunction = false):String {
 		var t:String = type;
 
+		// SAP changed map to Object.<string,value>
+		if(t.contains("Object.<") || t.contains("object.<"))
+		{
+			var types = t.split("<");
+			types = types[1].split(",");
+
+			var firstType = determineType(types[0]);
+			var secondType = determineType(types[1].replace(">",""));
+
+			t = 'Map<$firstType,$secondType>';
+		}
+
 		var isArray:Bool = false;
 		if (t.indexOf('[') != -1) {
 			isArray = true;
@@ -130,7 +142,7 @@ class Tools {
 				t = '()->Void';
 			case 'Promise':
 				t = 'js.lib.Promise<>';
-			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null':
+			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null' | '*':
 				t = 'Dynamic';
 			case 'array' | 'Array':
 				t = start + 'Array<Dynamic>' + end;
