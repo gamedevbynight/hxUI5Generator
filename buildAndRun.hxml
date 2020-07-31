@@ -2,8 +2,8 @@
 -main Main
 -lib json2object
 -lib haxe-files
--neko  creator.n
+-hl  creator.hl
 -D no-deprecation-warnings
--cmd neko creator.n https://openui5.hana.ondemand.com/test-resources/sap/ C:\\hxUI5\\src\\
+-cmd hl creator.hl https://openui5.hana.ondemand.com/test-resources/sap/ C:\\hxUI5\\
 
 

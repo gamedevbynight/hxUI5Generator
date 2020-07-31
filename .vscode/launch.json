@@ -2,15 +2,28 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "HashLink",
+			"name": "HashLink Parameter",
 			"request": "launch",
 			"type": "hl",
-			"hxml": "build.hxml",
+			"hxml": "buildHl.hxml",
 			"cwd": "${workspaceRoot}",
 			"preLaunchTask": {
 				"type" : "haxe",
 				"args" : "active configuration"
-			}
+			},
+			"args": ["https://openui5.hana.ondemand.com/test-resources/sap/","C:\\hxUI5\\", "395", "core"]
+		},
+		{
+			"name": "HashLink Normal",
+			"request": "launch",
+			"type": "hl",
+			"hxml": "buildHl.hxml",
+			"cwd": "${workspaceRoot}",
+			"preLaunchTask": {
+				"type" : "haxe",
+				"args" : "active configuration"
+			},
+			"args": ["https://openui5.hana.ondemand.com/test-resources/sap/","C:\\hxUI5\\src\\"]
 		}
 	]
 }

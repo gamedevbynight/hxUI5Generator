@@ -13,7 +13,7 @@ class ReadMeBuilder {
 
 		fileContent.add('# hxUI5
 Generated haxe externs for [OpenUI5](https://openui5.hana.ondemand.com/).   
-Generated with: [Haxe UI5 Extern Generatroe](https://github.com/gamedevbynight/hxUI5Generator)  
+Generated with: [Haxe UI5 Extern Generator](https://github.com/gamedevbynight/hxUI5Generator)  
 Write UI5-Apps in a typesafe language using [Haxe](https://haxe.org/)
 
 Generated from Version:\n');

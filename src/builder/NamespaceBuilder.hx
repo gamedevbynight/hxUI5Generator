@@ -11,12 +11,12 @@ class NamespaceBuilder implements IBuilder {
 
 	public function build(symbol:Symbol):String {
 		var fileContent:String = '';
-		if (symbol.methods != null || symbol.ui5metadata != null) {
+		if (symbol.methods != null || symbol.ui5metadata != null || symbol.properties != null) {
 			if (symbol.ui5metadata != null && symbol.ui5metadata.stereotype == 'datatype') {
 				fileContent = buildFileForDatatypeNamespace(symbol);
 			}
-			if (symbol.methods != null) {
-				fileContent = buildFileForMethodNamespace(symbol);
+			if (symbol.methods != null || symbol.properties != null) {
+				fileContent = buildFileForNamespace(symbol);
 			}
 		}
 		return fileContent;
@@ -26,7 +26,7 @@ class NamespaceBuilder implements IBuilder {
 		Tools.setPathForSymbol(symbol);
 
 		var file = Tools.fileForSymbol(symbol);
-		var fileContent= new StringBuf();
+		var fileContent = new StringBuf();
 		fileContent.add(Tools.buildPackageNameForSymbol(symbol));
 
 		fileContent.add(Tools.buildComment('', symbol.description));
@@ -43,7 +43,7 @@ class NamespaceBuilder implements IBuilder {
 		return fileContent.toString();
 	}
 
-	function buildFileForMethodNamespace(symbol:Symbol):String {
+	function buildFileForNamespace(symbol:Symbol):String {
 		Tools.setPathForSymbol(symbol);
 
 		var nativeName = false;
@@ -51,7 +51,11 @@ class NamespaceBuilder implements IBuilder {
 			nativeName = true;
 		}
 
-		if (Tools.isLowerCase(symbol.basename.charAt(0))) {
+		if (symbol.basename == 'browser') {
+			trace("hier bin ich");
+		}
+
+		if (Tools.isLowerCase(symbol.basename.charAt(0)))  {
 			nativeName = true;
 			var chars = symbol.basename.split('');
 			chars[0] = chars[0].toUpperCase();
@@ -63,7 +67,7 @@ class NamespaceBuilder implements IBuilder {
 		}
 
 		var file = Tools.fileForSymbol(symbol);
-		var fileContent= new StringBuf();
+		var fileContent = new StringBuf();
 		fileContent.add(Tools.buildPackageNameForSymbol(symbol));
 
 		if (nativeName) {
@@ -72,11 +76,29 @@ class NamespaceBuilder implements IBuilder {
 
 		fileContent.add('extern class ' + symbol.basename);
 		fileContent.add('\n{\n');
-		fileContent.add(methodBuilder.build(symbol));
+		if (symbol.properties != null) {
+			fileContent.add(buildProperties(symbol));
+			fileContent.add('\n\n');
+		}
+		if (symbol.methods != null) {
+			fileContent.add(methodBuilder.build(symbol));
+		}
 		fileContent.add('}\n\n');
 
 		file.writeString(fileContent.toString());
 
 		return fileContent.toString();
+	}
+
+	function buildProperties(symbol:Symbol):String {
+		var propertiesContent:String = "";
+		for (property in symbol.properties) {
+			if (property.visibility == "public") {
+				propertiesContent += (Tools.buildComment('	', property.description));
+				propertiesContent += '	 public static var ' + property.name + ':' + Tools.determineType(property.type) + ';\n';
+			}
+		}
+
+		return propertiesContent;
 	}
 }

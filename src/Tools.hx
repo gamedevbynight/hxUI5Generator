@@ -93,16 +93,17 @@ class Tools {
 	public static function determineType(type:String, ?isArgsFunction = false):String {
 		var t:String = type;
 
+		var doNotCorrectName:Bool = false;
 		// SAP changed map to Object.<string,value>
-		if(t.contains("Object.<") || t.contains("object.<"))
-		{
+		if (t.contains("Object.<") || t.contains("object.<") || t.contains("Object<") || t.contains("object.<")) {
 			var types = t.split("<");
 			types = types[1].split(",");
 
 			var firstType = determineType(types[0]);
-			var secondType = determineType(types[1].replace(">",""));
+			var secondType = determineType(types[1].replace(">", ""));
 
 			t = 'Map<$firstType,$secondType>';
+			doNotCorrectName = true;
 		}
 
 		var isArray:Bool = false;
@@ -111,11 +112,11 @@ class Tools {
 			t = t.replace('[]', '');
 		}
 
-		if (t.indexOf('module:') != -1 || checkCorrectName(t)) {
+		if ((t.indexOf('module:') != -1 || checkCorrectName(t)) && doNotCorrectName == false) {
 			t = findHaxeName(t);
 		}
 
-		if (t.indexOf('Promise.') != -1 || t.indexOf('promise.') != -1) {
+		if (t.indexOf('Promise.') != -1 || t.indexOf('promise.') != -1 || t.indexOf('Promise<') != -1 || t.indexOf('promise<') != -1) {
 			var promiseType = t.substring(t.indexOf('<') + 1, t.indexOf('>'));
 			t = 'js.lib.Promise<' + determineType(promiseType) + '>';
 		}
@@ -172,7 +173,7 @@ class Tools {
 
 	public static function isLowerCase(char:String):Bool {
 		var alphabet:String = 'abcdefghijklmnopqrstuvwxyz';
-		if (alphabet.indexOf(char) != 1)
+		if (alphabet.indexOf(char) != -1)
 			return true;
 
 		return false;

@@ -46,7 +46,7 @@ class MethodBuilder implements IBuilder {
 				var types = parameter.type.split('|');
 				for (type in types) {
 					typeCollection.push({
-						name: parameter.name,
+						name: parameter.name.replace('=', ''),
 						type: type,
 						optional: parameter.optional,
 						description: parameter.description
@@ -57,7 +57,7 @@ class MethodBuilder implements IBuilder {
 			} else {
 				var type = new Array<MethodParameter>();
 				type.push({
-					name: parameter.name,
+					name: parameter.name.replace('=', ''),
 					type: parameter.type,
 					optional: parameter.optional,
 					description: parameter.description

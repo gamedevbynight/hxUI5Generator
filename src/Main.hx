@@ -37,6 +37,7 @@ class Main {
 		namespaceBuilder = new NamespaceBuilder();
 		interfaceBuilder = new InterfaceBuilder();
 		classBuilder = new ClassBuilder();
+	
 		url = Sys.args()[0];
 		path = Sys.args()[1];
 
@@ -100,18 +101,25 @@ class Main {
 
 	function createReadme(version:String):Void
 	{
-		createMainDirs();
+		goToRoot();
 		var readmeBuilder = new ReadMeBuilder();
 		readmeBuilder.build(version);
 	}
 
-	function createMainDirs() {
+	function goToRoot() {
 		var p = Path.of(path);
+		var srcDir = p.toDir();
+		srcDir.setCWD();
+		srcDir.moveTo(path);
+	}
+
+	function createMainDirs() {
+		var p = Path.of(path+ "src\\");
 		var srcDir = p.toDir();
 		if (!p.exists()) {
 			srcDir.create();
 		}
-		srcDir.setCWD();
+		srcDir.setCWD();		
 	}
 
 	function createExterns(overview:Overview) {
