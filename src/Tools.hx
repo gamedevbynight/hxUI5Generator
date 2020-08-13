@@ -40,6 +40,35 @@ class Tools {
 		return false;
 	}
 
+	public static function fixTypeCase(name:String):String {
+		var splits = name.split('.');
+		if ((splits.length > 1) && isLowerCase(splits[splits.length - 1].charAt(0))) {
+			correctNameCase(splits);
+
+			var newName:String = '';
+			for (split in splits) {
+				newName += split;
+				if (split != splits[splits.length - 1]) {
+					newName = newName.toLowerCase();
+					newName += '.';
+				}
+			}
+
+			return newName;
+		}
+		return name;
+	}
+
+	static function correctNameCase(splits:Array<String>) {
+		var lastWord = splits.pop();
+		lastWord = firstLetterToUppercase(lastWord);
+		splits.push(lastWord);
+	}
+
+	static function firstLetterToUppercase(word:String):String {
+		return word.charAt(0).toUpperCase() + word.substr(1);
+	}
+
 	public static function fixNamePath(name:String):String {
 		var subPaths = name.split('.');
 
@@ -104,6 +133,11 @@ class Tools {
 
 			t = 'Map<$firstType,$secondType>';
 			doNotCorrectName = true;
+		}
+
+		if (t.contains("fn")) {
+			t = fixTypeCase(t);
+			t = t + "->Dynamic";
 		}
 
 		var isArray:Bool = false;

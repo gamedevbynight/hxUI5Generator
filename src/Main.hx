@@ -16,6 +16,7 @@ class Main {
 	var interfaceBuilder:InterfaceBuilder;
 	var namespaceBuilder:NamespaceBuilder;
 	var classBuilder:ClassBuilder;
+	var typedefBuilder:TypedefBuilder;
 	var sapM:String;
 	var sapTnt:String;
 	var sapF:String;
@@ -37,6 +38,7 @@ class Main {
 		namespaceBuilder = new NamespaceBuilder();
 		interfaceBuilder = new InterfaceBuilder();
 		classBuilder = new ClassBuilder();
+		typedefBuilder  = new TypedefBuilder();
 	
 		url = Sys.args()[0];
 		path = Sys.args()[1];
@@ -160,6 +162,8 @@ class Main {
 				interfaceBuilder.build(symbol);
 			case 'namespace':
 				namespaceBuilder.build(symbol);
+			case 'typedef':
+				typedefBuilder.build(symbol);
 			default: // nichts machen
 		}
 	}

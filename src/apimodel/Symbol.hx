@@ -1,5 +1,7 @@
 package apimodel;
 
+import apimodel.ReturnValue;
+
 // class Symbol {
 // 	public var kind:String;
 // 	public var name:String;
@@ -33,6 +35,8 @@ typedef Symbol = {
 	public var constructor:Constructor;
 	public var events:Array<Event>;
 	public var originalName:String;
+	public var returnValue:ReturnValue;
+	public var parameters:Array<MethodParameter>;
 	@:alias("implements")public var implementing:Array<String>;
 	@:alias("ui5-metadata")public var ui5metadata:UI5MetaData;
 }
