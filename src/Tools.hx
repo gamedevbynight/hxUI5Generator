@@ -174,7 +174,7 @@ class Tools {
 			case 'object' | 'Object':
 				t = start + 'Dynamic' + end;
 			case 'function' | 'Function' | 'function()':
-				t = '()->Void';
+				t = '(Dynamic)->Void';
 			case 'Promise':
 				t = 'js.lib.Promise<>';
 			case 'any' | 'Any' | 'map' | 'Map' | 'undefined' | 'null' | '*':
