@@ -6,6 +6,9 @@ How to generate the externs:
 Use the created Neko file creator.n with
 ```neko creator.n {UI5 URL} {Path} {?Number} {?Lib}```
 
+Or use the created Hashlink file creator.hl with
+```hl creator.hl {UI5 URL} {Path} {?Number} {?Lib}```
+
 For example:
 ```neko creator.n https://openui5.hana.ondemand.com/test-resources/sap/ C:\\hxUI5\\src\\ 101 m ```
 for sap.m.LightBoxItem 

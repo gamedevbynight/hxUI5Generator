@@ -11,7 +11,7 @@
 				"type" : "haxe",
 				"args" : "active configuration"
 			},
-			"args": ["https://openui5.hana.ondemand.com/test-resources/sap/","C:\\hxUI5\\", "145", "m"]
+			"args": ["https://openui5.hana.ondemand.com/test-resources/sap/","C:\\hxUI5\\", "146", "m"]
 		},
 		{
 			"name": "HashLink Normal",

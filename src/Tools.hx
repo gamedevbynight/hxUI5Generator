@@ -193,7 +193,8 @@ class Tools {
 				t = start + 'sap.ui.core.configuration.FormatSettings' + end;
 			case 'sap.ui.core.Configuration.AnimationMode':
 				t = start + 'sap.ui.core.configuration.AnimationMode' + end;
-
+			case 'Array<function()>':
+				t = 'Array<(Dynamic)->Void>';
 			default:
 				if (isArgsFunction)
 					t = start + t + end;
